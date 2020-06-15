@@ -26,12 +26,16 @@ class _LevelOneScreenState extends State<LevelOneScreen> {
             SliverAppBar(
               brightness: Brightness.light,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios, color: Colors.white,), onPressed: () {
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
                   Navigator.pop(context);
                 },
               ),
               backgroundColor: Colors.black,
-              expandedHeight: 200,
+              expandedHeight: MediaQuery.of(context).size.height / 3,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
                 background: Container(
@@ -39,16 +43,21 @@ class _LevelOneScreenState extends State<LevelOneScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Container(
-                        width: 100,
-                        height: 100,
+                        width: MediaQuery.of(context).size.height / 6,
+                        height: MediaQuery.of(context).size.height / 6,
                         child: CircleAvatar(
                           radius: 50.0,
                           backgroundColor: Colors.transparent,
                           backgroundImage: NetworkImage(user.avatar_url),
                         ),
                       ),
-                      SizedBox(height: 20,),
-                      Text(user.login, style: TextStyle(fontSize: 20, color: Colors.white),)
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 30,
+                      ),
+                      Text(
+                        'Welcome ${user.login} !',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
                     ],
                   ),
                 ),

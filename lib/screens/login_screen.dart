@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Key;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:learngit/providers/user_provider.dart';
 import 'package:learngit/screens/level_1.dart';
 import 'package:provider/provider.dart';
@@ -15,17 +16,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    _usernameController.text = '';
   }
 
   var _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    _usernameController.text = '';
+    Provider.of<UserProvider>(context).user = null;
     return ChangeNotifierProvider(
       builder: (context) => UserProvider(),
       child: Consumer<UserProvider>(
         builder: (context, user, child) => Scaffold(
           body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Container(
               height: MediaQuery.of(context).size.height,
               color: Colors.black,
@@ -110,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 4.5,
+                      height: MediaQuery.of(context).size.height / 4.9,
                     ),
                     Row(
                       children: <Widget>[
@@ -128,7 +133,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: InkWell(
                                       splashColor: Colors.grey,
                                       onTap: () {
-                                        _onNextStepButtonPressed();
+                                        if (_usernameController.text == '') {
+                                          setState(() {
+                                            Provider.of<UserProvider>(context)
+                                                    .errorMessage =
+                                                'Please Enter your GitHub Username';
+                                          });
+                                        } else
+                                          _onNextStepButtonPressed();
                                       },
                                       child: Column(
                                         mainAxisAlignment:

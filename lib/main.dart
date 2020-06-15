@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:learngit/providers/user_provider.dart';
 import 'package:learngit/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(
+  ChangeNotifierProvider<UserProvider>(
+    builder: (context) => UserProvider(),
+    child: MaterialApp(
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    ),
+  )
+);
 
 class MyApp extends StatelessWidget {
   @override

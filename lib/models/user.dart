@@ -2,11 +2,13 @@ class User {
   String login;
   String avatar_url;
   String html_url;
+  double rate;
 
   User({
     this.login,
     this.avatar_url,
-    this.html_url
+    this.html_url,
+    this.rate
   });
 
   factory User.fromJson(Map json) {

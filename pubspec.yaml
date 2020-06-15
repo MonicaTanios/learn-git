@@ -27,6 +27,8 @@ dependencies:
   url_launcher: ^5.4.10
   http: ^0.12.1
   provider: 3.0.0
+  path_provider: ^0.4.1
+  smooth_star_rating: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +50,8 @@ flutter:
   assets:
    - assets/coding.flr
    - assets/github.jpg
-   - assets/oauthGithub.txt
+   - assets/data/oauthGithub.txt
+   - assets/data/userRate.txt
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

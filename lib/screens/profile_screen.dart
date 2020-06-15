@@ -1,20 +1,35 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:learngit/models/user.dart';
 import 'package:learngit/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class LevelOneScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   @override
-  _LevelOneScreenState createState() => _LevelOneScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _LevelOneScreenState extends State<LevelOneScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   User user;
+  static String data;
+
+  @override
+  void initState() {
+    asyncInitState();
+    super.initState();
+  }
+
+  void asyncInitState() async {
+    data = await readDataFromFile();
+    }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
       user = Provider.of<UserProvider>(context).getUser();
+      user.rate = double.parse(data);
     });
 
     return Scaffold(
@@ -58,6 +73,19 @@ class _LevelOneScreenState extends State<LevelOneScreen> {
                         'Welcome ${user.login} !',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
+                      SmoothStarRating(
+                        rating: user.rate,
+                        isReadOnly: true,
+                        size: 40,
+                        filledIconData: Icons.star,
+                        starCount: 5,
+                        color: Colors.yellow,
+                        borderColor: Colors.yellow,
+                      ),
+                      Text(
+                        '${(user.rate / 5) * 100} % done',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      )
                     ],
                   ),
                 ),
@@ -67,5 +95,10 @@ class _LevelOneScreenState extends State<LevelOneScreen> {
         ),
       ),
     );
+  }
+
+  Future<String> readDataFromFile() async {
+    String data = await rootBundle.loadString('assets/data/userRate.txt');
+    return data;
   }
 }

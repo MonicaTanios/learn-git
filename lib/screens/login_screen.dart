@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' hide Key;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:learngit/providers/user_provider.dart';
-import 'package:learngit/screens/level_1.dart';
+import 'package:learngit/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -188,10 +188,9 @@ class _LoginScreenState extends State<LoginScreen> {
     Provider.of<UserProvider>(context)
         .fetchUser(_usernameController.text)
         .then((value) {
-      if (value) {
-        print(_usernameController.text);
+      if (value != null) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LevelOneScreen()));
+            context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       }
     });
   }

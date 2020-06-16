@@ -30,7 +30,7 @@
 .pub/
 /build/
 /assets/data/oauthGithub.txt
-pubspec.lock
+/pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart

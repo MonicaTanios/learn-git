@@ -22,7 +22,7 @@ class UserProvider with ChangeNotifier {
         setMessage(result['message']);
       }
     });
-
+    setLoading(false);
     return isUser();
   }
 
@@ -31,7 +31,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool isLoading() { 
+  bool isLoading() {
     return loading;
   }
 
@@ -40,7 +40,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  User getUser() { 
+  User getUser() {
     return user;
   }
 

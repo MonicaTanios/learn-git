@@ -24,8 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _usernameController.text = '';
     Provider.of<UserProvider>(context).user = null;
+    setState(() {
+      Provider.of<UserProvider>(context).setLoading(false);
+    });
     return ChangeNotifierProvider(
       builder: (context) => UserProvider(),
       child: Consumer<UserProvider>(
@@ -132,8 +134,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.7,
                         ),
-                        !Provider.of<UserProvider>(context).isLoading()
-                            ? SizedBox.fromSize(
+                        Provider.of<UserProvider>(context).isLoading()
+                            ? CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Palette.secondary))
+                            : SizedBox.fromSize(
                                 size: Size(
                                     MediaQuery.of(context).size.height / 7,
                                     MediaQuery.of(context).size.height / 7),
@@ -150,7 +156,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 'Please Enter your GitHub Username';
                                           });
                                         } else
-                                          _onNextStepButtonPressed();
+                                          setState(() {
+                                            Provider.of<UserProvider>(context)
+                                                .setLoading(true);
+                                            onNextStepButtonPressed();
+                                          });
                                       },
                                       child: Column(
                                         mainAxisAlignment:
@@ -178,10 +188,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               )
-                            : CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.red)),
                       ],
                     ),
                   ],
@@ -194,11 +200,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _onNextStepButtonPressed() {
+  void onNextStepButtonPressed() {
     Provider.of<UserProvider>(context)
         .fetchUser(_usernameController.text)
         .then((value) {
       if (value) {
+        Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       }

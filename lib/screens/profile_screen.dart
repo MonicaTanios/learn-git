@@ -5,6 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:learngit/models/level.dart';
 import 'package:learngit/models/user.dart';
 import 'package:learngit/providers/user_provider.dart';
+import 'package:learngit/screens/login_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -60,6 +61,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                 ),
                 backgroundColor: Palette.primary,
@@ -113,16 +116,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     leading: Icon(
                                       Icons.stars,
                                       color: Colors.yellow,
-                                      size:
-                                          MediaQuery.of(context).size.width / 14,
+                                      size: MediaQuery.of(context).size.width /
+                                          14,
                                     ),
                                     title: Text(
                                       'Level #${levels[index].title}',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize:
-                                              MediaQuery.of(context).size.width /
-                                                  20),
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              20),
                                     ),
                                     subtitle: Text(levels[index].description,
                                         style: TextStyle(
@@ -138,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           )),
                                       progressColor: Colors.green,
                                     ),
-                                    onTap: (){
+                                    onTap: () {
                                       //TODO: Go to level
                                     },
                                     enabled: true,

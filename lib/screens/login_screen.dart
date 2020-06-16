@@ -188,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Provider.of<UserProvider>(context)
         .fetchUser(_usernameController.text)
         .then((value) {
-      if (value != null) {
+      if (value) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       }

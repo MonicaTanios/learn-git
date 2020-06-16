@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Key;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:learngit/palette.dart';
 import 'package:learngit/providers/user_provider.dart';
 import 'package:learngit/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
             scrollDirection: Axis.vertical,
             child: Container(
               height: MediaQuery.of(context).size.height,
-              color: Colors.black,
+              color: Palette.primary,
               child: Padding(
                 padding: EdgeInsets.all(32),
                 child: Column(
@@ -66,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(.1)),
+                          color: Palette.secondary),
                       child: TextField(
                         controller: _usernameController,
                         onChanged: (value) {
@@ -91,8 +92,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () => showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text("Sign Up"),
-                          content: Text("Sign Up then enter your username"),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          backgroundColor: Palette.secondary,
+                          title: Text("Sign Up",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18)),
+                          content: Text("Sign Up then enter your username",
+                              style: TextStyle(
+                                color: Colors.white,
+                              )),
                           actions: [
                             FlatButton(
                               child: Text("Sign Up"),
@@ -129,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MediaQuery.of(context).size.height / 7),
                                 child: ClipOval(
                                   child: Material(
-                                    color: Colors.white.withOpacity(.1),
+                                    color: Palette.secondary,
                                     child: InkWell(
                                       splashColor: Colors.grey,
                                       onTap: () {

@@ -1,0 +1,112 @@
+[
+    {
+        "title": "1",
+        "description": "This is level one",
+        "numOfCommands": "3",
+        "commands": {
+            "push": {
+                "name": "push",
+                "usage": "Used to push",
+                "example": "git push upstream new-branch"
+            },
+            "pull": {
+                "name": "pull",
+                "usage": "Used to pull",
+                "example": "git pull upstream new-branch"
+            },
+            "status": {
+                "name": "status",
+                "usage": "Used to get the status",
+                "example": "git status"
+            }
+        }
+    },
+    {
+        "title": "2",
+        "description": "This is level two",
+        "numOfCommands": "3",
+        "commands": {
+            "push": {
+                "name": "push",
+                "usage": "Used to push",
+                "example": "git push upstream new-branch"
+            },
+            "pull": {
+                "name": "pull",
+                "usage": "Used to pull",
+                "example": "git pull upstream new-branch"
+            },
+            "status": {
+                "name": "status",
+                "usage": "Used to get the status",
+                "example": "git status"
+            }
+        }
+    },
+    {
+        "title": "3",
+        "description": "This is level three",
+        "numOfCommands": "3",
+        "commands": {
+            "push": {
+                "name": "push",
+                "usage": "Used to push",
+                "example": "git push upstream new-branch"
+            },
+            "pull": {
+                "name": "pull",
+                "usage": "Used to pull",
+                "example": "git pull upstream new-branch"
+            },
+            "status": {
+                "name": "status",
+                "usage": "Used to get the status",
+                "example": "git status"
+            }
+        }
+    },
+    {
+        "title": "4",
+        "description": "This is level four",
+        "numOfCommands": "3",
+        "commands": {
+            "push": {
+                "name": "push",
+                "usage": "Used to push",
+                "example": "git push upstream new-branch"
+            },
+            "pull": {
+                "name": "pull",
+                "usage": "Used to pull",
+                "example": "git pull upstream new-branch"
+            },
+            "status": {
+                "name": "status",
+                "usage": "Used to get the status",
+                "example": "git status"
+            }
+        }
+    },
+    {
+        "title": "5",
+        "description": "This is level five",
+        "numOfCommands": "3",
+        "commands": {
+            "push": {
+                "name": "push",
+                "usage": "Used to push",
+                "example": "git push upstream new-branch"
+            },
+            "pull": {
+                "name": "pull",
+                "usage": "Used to pull",
+                "example": "git pull upstream new-branch"
+            },
+            "status": {
+                "name": "status",
+                "usage": "Used to get the status",
+                "example": "git status"
+            }
+        }
+    }
+]

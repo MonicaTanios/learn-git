@@ -11,6 +11,11 @@ class User {
     this.rate
   });
 
+  void setRate(double rate)
+  {
+    this.rate = rate;
+  }
+
   factory User.fromJson(Map json) {
     return User(
       login: json['login'],

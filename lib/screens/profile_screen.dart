@@ -23,13 +23,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void asyncInitState() async {
     data = await readDataFromFile();
-    }
+  }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
       user = Provider.of<UserProvider>(context).getUser();
-      user.rate = double.parse(data);
+      user.setRate(double.parse(data));
     });
 
     return Scaffold(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:learngit/palette.dart';
 import 'package:learngit/providers/user_provider.dart';
+import 'package:learngit/requests/firebase.dart';
 import 'package:learngit/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<UserProvider>(context).user = null;
     setState(() {
       Provider.of<UserProvider>(context).setLoading(false);
     });
@@ -205,6 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .fetchUser(_usernameController.text)
         .then((value) {
       if (value) {
+        FirebaseRequest.setUser(Provider.of<UserProvider>(context).getUser());
         Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileScreen()));

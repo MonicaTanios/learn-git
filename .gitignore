@@ -28,6 +28,8 @@
 .packages
 .pub-cache/
 .pub/
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
 /build/
 /assets/data/oauthGithub.txt
 /pubspec.lock

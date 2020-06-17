@@ -5,7 +5,7 @@ import 'package:learngit/models/user.dart';
 class FirebaseRequest {
   static DatabaseReference databaseReference =
       FirebaseDatabase.instance.reference();
-  static final List<Level> levels = null;
+  static List<Level> levels = [];
   static User user;
 
   static List<Level> getLevels() {
@@ -13,7 +13,6 @@ class FirebaseRequest {
       for (var level in dataSnapShot.value) {
         levels.add(new Level.fromJson(level));
       }
-      return levels;
     });
     return levels;
   }

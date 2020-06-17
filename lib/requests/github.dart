@@ -13,10 +13,10 @@ class Github {
   Github(this.userName);
 
   Future<http.Response> fetchUser() async {
-    String data =  await rootBundle.loadString('assets/data/oauthGithub.txt');
-    List<String> secretData = data.split('\n').map((String text){}).toList();
-    client_id = secretData[0];
-    client_secret = secretData[1];
+    String data = await rootBundle.loadString('assets/data/oauthGithub.txt');
+    List<String> secretData = data.split('\n');
+    client_id = secretData[0].trim();
+    client_secret = secretData[1].trim();
     return http.get(url + 'users/' + userName + query);
   }
 }

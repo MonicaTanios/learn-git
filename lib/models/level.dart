@@ -1,14 +1,17 @@
+import 'package:learngit/models/command.dart';
+
 class Level {
   String title;
   String description;
   String numOfCommands;
-  //TODO: Add Commands
+  List<Command> commands;
   //TODO: Add Questions
 
   Level({
     this.title,
     this.description,
     this.numOfCommands,
+    this.commands
   });
 
   factory Level.fromJson(Map json) {
@@ -16,6 +19,7 @@ class Level {
       title: json['title'],
       description: json['description'],
       numOfCommands: json['numOfCommands'],
+      commands: (json['commands'] as List).map((i) => Command.fromJson(i)).toList()
     );
   }
 
@@ -24,6 +28,7 @@ class Level {
       'title': title,
       'description': description,
       'numOfCommands': numOfCommands,
+      'commands' : commands
     };
   }
 
@@ -33,6 +38,7 @@ class Level {
       title: $title,
       description: $description,
       numOfCommands: $numOfCommands,
+      commands: $commands
     }''';
   }
 

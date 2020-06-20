@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:learngit/models/user.dart';
 import 'package:learngit/requests/github.dart';
 
-class UserProvider with ChangeNotifier {
+class UserRepository with ChangeNotifier {
   User user;
   String errorMessage;
   bool loading = false;

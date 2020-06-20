@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learngit/providers/user_provider.dart';
+import 'package:learngit/repositories/user_repository.dart';
 import 'package:learngit/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-  ChangeNotifierProvider<UserProvider>(
-    builder: (context) => UserProvider(),
+  ChangeNotifierProvider<UserRepository>(
+    builder: (context) => UserRepository(),
     child: MaterialApp(
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,

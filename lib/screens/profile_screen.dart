@@ -1,11 +1,11 @@
 import '../palette.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:learngit/models/level.dart';
 import 'package:learngit/models/user.dart';
-import 'package:learngit/providers/user_provider.dart';
+import 'package:learngit/repositories/user_repository.dart';
 import 'package:learngit/requests/firebase.dart';
+import 'package:learngit/screens/level_screen.dart';
 import 'package:learngit/screens/login_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -24,18 +24,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     asyncInitState();
+    setState(() {});
     super.initState();
     setState(() {});
   }
 
   void asyncInitState() async {
-    Future.delayed(const Duration(milliseconds: 1000), () async {
-      ratingData = await readFile('assets/data/userRate.txt');
+    Future.delayed(const Duration(milliseconds: 3000), () async {
       levels = [];
       user = null;
-      user = Provider.of<UserProvider>(context).getUser();
-      user.setRate(double.parse(ratingData));
+      user = Provider.of<UserRepository>(context).getUser();
+      user.calculateRate();
       levels = FirebaseRequest.getLevels();
+      levels = levels.sublist(0, 5);
       setState(() {});
     });
   }
@@ -44,22 +45,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return (user == null)
         ? Container(
-          color: Palette.primary,
-          child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 10,
-                  ),
-                  CircularProgressIndicator(
-                      backgroundColor: Colors.white,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Palette.secondary)),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 10,
-                  ),
-                ],
+            color: Palette.primary,
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 10,
+                ),
+                CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Palette.secondary)),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 10,
+                ),
+              ],
             ),
-        )
+          )
         : Scaffold(
             backgroundColor: Palette.primary,
             body: Padding(
@@ -137,45 +138,111 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           return Column(
                                             children: <Widget>[
                                               ListTile(
-                                                leading: Icon(
-                                                  Icons.stars,
-                                                  color: Colors.yellow,
-                                                  size: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      14,
-                                                ),
-                                                title: Text(
-                                                  'Level #${levels[index].title}',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              20),
-                                                ),
-                                                subtitle: Text(
-                                                    levels[index].description,
+                                                  leading: Icon(
+                                                    Icons.stars,
+                                                    color: Colors.yellow,
+                                                    size: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        14,
+                                                  ),
+                                                  title: Text(
+                                                    'Level #${levels[index].title}',
                                                     style: TextStyle(
-                                                      color: Colors.white,
-                                                    )),
-                                                trailing:
-                                                    CircularPercentIndicator(
-                                                  radius: 45.0,
-                                                  lineWidth: 4.0,
-                                                  percent: 0.90,
-                                                  center: new Text("90%",
+                                                        color: Colors.white,
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            20),
+                                                  ),
+                                                  subtitle: Text(
+                                                      levels[index].description,
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                       )),
-                                                  progressColor: Colors.green,
-                                                ),
-                                                onTap: () {
-                                                  //TODO: Go to level
-                                                },
-                                                enabled: true,
-                                              ),
+                                                  trailing:
+                                                      CircularPercentIndicator(
+                                                    radius: 45.0,
+                                                    lineWidth: 4.0,
+                                                    percent: (levels[index]
+                                                                .title ==
+                                                            '1')
+                                                        ? user.levelOneRate
+                                                        : (levels[index]
+                                                                    .title ==
+                                                                '2')
+                                                            ? user.levelTwoRate
+                                                            : (levels[index]
+                                                                        .title ==
+                                                                    '3')
+                                                                ? user
+                                                                    .levelOneRate
+                                                                : (levels[index]
+                                                                            .title ==
+                                                                        '4')
+                                                                    ? user
+                                                                        .levelFourRate
+                                                                    : user
+                                                                        .levelFiveRate,
+                                                    center: new Text(
+                                                        (levels[index].title ==
+                                                                '1')
+                                                            ? "${user.levelOneRate * 100}%"
+                                                            : (levels[index]
+                                                                        .title ==
+                                                                    '2')
+                                                                ? "${user.levelTwoRate * 100}%"
+                                                                : (levels[index]
+                                                                            .title ==
+                                                                        '3')
+                                                                    ? "${user.levelThreeRate * 100}%"
+                                                                    : (levels[index].title ==
+                                                                            '4')
+                                                                        ? "${user.levelFourRate * 100}%"
+                                                                        : "${user.levelFiveRate * 100}%",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        )),
+                                                    progressColor: Colors.green,
+                                                  ),
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              LevelScreen(),
+                                                          settings:
+                                                              RouteSettings(
+                                                            arguments:
+                                                                levels[index],
+                                                          ),
+                                                        ));
+                                                  },
+                                                  enabled: (levels[index].title ==
+                                                          '1')
+                                                      ? true
+                                                      : (levels[index].title ==
+                                                                  '2' &&
+                                                              user.rate >= 1)
+                                                          ? true
+                                                          : (levels[index].title ==
+                                                                      '3' &&
+                                                                  user.rate >=
+                                                                      2)
+                                                              ? true
+                                                              : (levels[index].title ==
+                                                                          '4' &&
+                                                                      user.rate >=
+                                                                          3)
+                                                                  ? true
+                                                                  : (levels[index].title ==
+                                                                              '5' &&
+                                                                          user.rate >=
+                                                                              4)
+                                                                      ? true
+                                                                      : false),
                                               Divider(
                                                 color: Colors.white,
                                               )
@@ -195,9 +262,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           );
-  }
-
-  Future<String> readFile(String path) async {
-    return await rootBundle.loadString(path);
   }
 }

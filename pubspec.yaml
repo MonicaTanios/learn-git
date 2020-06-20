@@ -31,6 +31,7 @@ dependencies:
   smooth_star_rating: ^1.1.1
   percent_indicator: ^2.1.5
   firebase_database: ^3.1.6
+  grouped_list: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +54,6 @@ flutter:
    - assets/coding.flr
    - assets/github.jpg
    - assets/data/oauthGithub.txt
-   - assets/data/userRate.txt
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

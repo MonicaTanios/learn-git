@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' hide Key;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:learngit/palette.dart';
-import 'package:learngit/providers/user_provider.dart';
+import 'package:learngit/repositories/user_repository.dart';
 import 'package:learngit/requests/firebase.dart';
 import 'package:learngit/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -26,11 +26,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      Provider.of<UserProvider>(context).setLoading(false);
+      Provider.of<UserRepository>(context).setLoading(false);
     });
     return ChangeNotifierProvider(
-      builder: (context) => UserProvider(),
-      child: Consumer<UserProvider>(
+      builder: (context) => UserRepository(),
+      child: Consumer<UserRepository>(
         builder: (context, user, child) => Scaffold(
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -73,14 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: TextField(
                         controller: _usernameController,
                         onChanged: (value) {
-                          Provider.of<UserProvider>(context).setMessage(null);
+                          Provider.of<UserRepository>(context).setMessage(null);
                         },
                         enabled:
-                            !Provider.of<UserProvider>(context).isLoading(),
+                            !Provider.of<UserRepository>(context).isLoading(),
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                            errorText:
-                                Provider.of<UserProvider>(context).getMessage(),
+                            errorText: Provider.of<UserRepository>(context)
+                                .getMessage(),
                             border: InputBorder.none,
                             hintText: "Github username",
                             hintStyle: TextStyle(color: Colors.grey)),
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.7,
                         ),
-                        Provider.of<UserProvider>(context).isLoading()
+                        Provider.of<UserRepository>(context).isLoading()
                             ? CircularProgressIndicator(
                                 backgroundColor: Colors.white,
                                 valueColor: AlwaysStoppedAnimation<Color>(
@@ -151,13 +151,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       onTap: () {
                                         if (_usernameController.text == '') {
                                           setState(() {
-                                            Provider.of<UserProvider>(context)
+                                            Provider.of<UserRepository>(context)
                                                     .errorMessage =
                                                 'Please Enter your GitHub Username';
                                           });
                                         } else
                                           setState(() {
-                                            Provider.of<UserProvider>(context)
+                                            Provider.of<UserRepository>(context)
                                                 .setLoading(true);
                                             onNextStepButtonPressed();
                                           });
@@ -201,11 +201,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void onNextStepButtonPressed() {
-    Provider.of<UserProvider>(context)
+    Provider.of<UserRepository>(context)
         .fetchUser(_usernameController.text)
         .then((value) {
       if (value) {
-        FirebaseRequest.setUser(Provider.of<UserProvider>(context).getUser());
+        if (FirebaseRequest.getUser(_usernameController.text) == null) {
+          Provider.of<UserRepository>(context).user.firstTime();
+          FirebaseRequest.setUser(
+              Provider.of<UserRepository>(context).getUser());
+        }
         Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileScreen()));

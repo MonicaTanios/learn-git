@@ -23,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    setState(() {});
     asyncInitState();
     setState(() {});
     super.initState();
@@ -30,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void asyncInitState() async {
+    setState(() {});
     Future.delayed(const Duration(milliseconds: 3000), () async {
       levels = [];
       user = null;
@@ -39,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       levels = levels.sublist(0, 5);
       setState(() {});
     });
+    setState(() {});
   }
 
   @override
@@ -46,19 +49,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return (user == null)
         ? Container(
             color: Palette.primary,
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 10,
-                ),
-                CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Palette.secondary)),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 10,
-                ),
-              ],
+            child: Center(
+              child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  valueColor: AlwaysStoppedAnimation<Color>(Palette.secondary)),
             ),
           )
         : Scaffold(
@@ -177,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                         .title ==
                                                                     '3')
                                                                 ? user
-                                                                    .levelOneRate
+                                                                    .levelThreeRate
                                                                 : (levels[index]
                                                                             .title ==
                                                                         '4')

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:learngit/models/command.dart';
 import 'package:learngit/models/level.dart';
 import 'package:learngit/models/user.dart';
 import 'package:learngit/palette.dart';
 import 'package:learngit/repositories/user_repository.dart';
+import 'package:learngit/requests/firebase.dart';
 import 'package:learngit/screens/level_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -63,6 +62,8 @@ class _CommandsScreenState extends State<CommandsScreen> {
                         : (level.title == '4')
                             ? user.levelFourRate = 0.5
                             : user.levelFiveRate = 0.5;
+            FirebaseRequest.setUser(
+              Provider.of<UserRepository>(context).getUser());
             //TODO: Implement Test Screen
           },
         ),
